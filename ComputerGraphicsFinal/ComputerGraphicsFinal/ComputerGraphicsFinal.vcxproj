@@ -139,6 +139,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+<<<<<<< Updated upstream
+    <None Include="..\fragment.glsl" />
+    <None Include="..\vertex.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+=======
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="filetobuf.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fragment.glsl" />
+    <None Include="vertex.glsl" />
+>>>>>>> Stashed changes
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

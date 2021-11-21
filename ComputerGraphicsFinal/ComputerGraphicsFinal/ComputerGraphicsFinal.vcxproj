@@ -18,9 +18,19 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="filetobuf.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fragment.glsl" />
+    <None Include="vertex.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{272ADC24-5704-4122-A64E-3BEB285F505A}</ProjectGuid>
+    <ProjectGuid>{F609C481-F8D5-4066-87B3-78F948032F60}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ComputerGraphicsFinal</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
@@ -138,24 +148,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-<<<<<<< Updated upstream
-    <None Include="..\fragment.glsl" />
-    <None Include="..\vertex.glsl" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-=======
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="filetobuf.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="fragment.glsl" />
-    <None Include="vertex.glsl" />
->>>>>>> Stashed changes
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

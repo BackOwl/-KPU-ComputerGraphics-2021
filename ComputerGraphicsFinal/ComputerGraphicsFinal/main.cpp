@@ -11,16 +11,12 @@
 #include <malloc.h>
 #include <stdio.h>
 
-<<<<<<< Updated upstream
-=======
 #include "filetobuf.h"
->>>>>>> Stashed changes
 #define weight 600
 #define height 600
 #pragma warning(disable:4996)
 
-<<<<<<< Updated upstream
-=======
+
 bool make_vertexShader();
 bool make_fragmentShaders();
 GLuint make_shaderProgram();
@@ -186,7 +182,8 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glutMainLoop(); // 이벤트 처리 시작
 
 }
-
+GLvoid drawScene() {
+}
 
 GLvoid Timer(int value) {
 }
@@ -201,4 +198,3 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
 	switch (key) {
 	}
 }
->>>>>>> Stashed changes

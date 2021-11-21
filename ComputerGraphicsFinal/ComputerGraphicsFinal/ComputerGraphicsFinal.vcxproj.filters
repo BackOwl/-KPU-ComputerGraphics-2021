@@ -15,24 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< Updated upstream
-    <None Include="..\fragment.glsl">
-      <Filter>소스 파일</Filter>
-    </None>
-    <None Include="..\vertex.glsl">
-      <Filter>소스 파일</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-=======
-    <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="filetobuf.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -44,6 +26,10 @@
     <None Include="vertex.glsl">
       <Filter>소스 파일</Filter>
     </None>
->>>>>>> Stashed changes
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

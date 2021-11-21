@@ -1,0 +1,4 @@
+﻿  main.cpp
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(155,1): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(199,2): warning C4060: switch문에 'case' 또는 'default' 레이블이 없습니다.
+  ComputerGraphicsFinal.vcxproj -> C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\Debug\ComputerGraphicsFinal.exe

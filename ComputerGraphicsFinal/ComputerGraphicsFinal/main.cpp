@@ -340,7 +340,7 @@ void InitShader()
 }
 void InitBuffer()
 {
-	num_Triangle = loadObj_normalize_center("Resource\\gun.obj");
+	num_Triangle = loadObj("Resource\\gun.obj");
 
 	glGenVertexArrays(1, &vao); //--- VAO 를 지정하고 할당하기
 	glGenBuffers(2, vbo); //--- 2개의 VBO를 지정하고 할당하기
@@ -446,14 +446,14 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 
 GLvoid drawScene() {
 	GLfloat rColor, gColor, bColor;
-	rColor = gColor = bColor = 0.0;
+	rColor = gColor = bColor = 1.0;
 
 	PlaySound(TEXT("test1.wav"), NULL, SND_ASYNC | SND_ALIAS|SND_LOOP);
 
 	glClearColor(rColor, gColor, bColor, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 5.0f);
+	glm::vec3 cameraPos = glm::vec3(5.0f, 0.0f, 0.0f);
 	glm::vec3 cameraDirection = glm::vec3(0.0f, 0.0f, 0.0f); //--- 카메라 바라보는 방향
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);	//glm::cross(cameraDirection, cameraRight);
 	glm::mat4 view = glm::mat4(1.0f);
@@ -466,7 +466,7 @@ GLvoid drawScene() {
 	glm::mat4 projection = glm::mat4(1.0f);
 
 	projection = glm::perspective(glm::radians(45.0f), (float)weight / (float)height, 0.1f, 50.0f);
-	projection = glm::translate(projection, glm::vec3(0.0, 0.0, -5.0)); //--- 공간을 약간 뒤로 미뤄줌
+	projection = glm::translate(projection, glm::vec3(0.0, 0.0, 0.0)); //--- 공간을 약간 뒤로 미뤄줌
 
 
 	unsigned int projectionLocation = glGetUniformLocation(shaderID, "projectionTransform"); //--- 투영 변환 값 설정
@@ -498,7 +498,7 @@ GLvoid drawScene() {
 
 	glm::mat4 Si = glm::scale(glm::mat4(1.0f), glm::vec3(0.2, 0.2, 0.2));
 	//glm::mat4 Light = Tr * Si;
-	glUniform3f(colorLocation, 1.0, 0.0, 1.0);
+	glUniform3f(colorLocation, 0.0, 0.0, 0.0);
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(Si));
 
 	glDrawArrays(GL_TRIANGLES, 0, num_Triangle);

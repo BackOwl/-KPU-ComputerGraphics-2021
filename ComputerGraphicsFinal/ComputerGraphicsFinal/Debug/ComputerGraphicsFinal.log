@@ -1,7 +1,7 @@
 ﻿  main.cpp
-C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(121,29): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(122,29): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(123,29): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(416,1): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
-C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(520,2): warning C4060: switch문에 'case' 또는 'default' 레이블이 없습니다.
-  ComputerGraphicsFinal.vcxproj -> C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\Debug\ComputerGraphicsFinal.exe
+C:\2DGP\ComputerGraphics\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(121,29): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\2DGP\ComputerGraphics\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(122,29): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\2DGP\ComputerGraphics\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(123,29): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\2DGP\ComputerGraphics\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(416,1): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
+C:\2DGP\ComputerGraphics\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(520,2): warning C4060: switch문에 'case' 또는 'default' 레이블이 없습니다.
+  ComputerGraphicsFinal.vcxproj -> C:\2DGP\ComputerGraphics\ComputerGraphicsFinal\Debug\ComputerGraphicsFinal.exe

@@ -10,6 +10,16 @@
 #include <random>
 #include <malloc.h>
 #include <stdio.h>
+/////
+#pragma comment(lib,"winmm")
+#include < mmsystem.h> 
+// SND_ASUNC = 재생중에도 프로그램이 계속 돌아감	
+// SND_SYNC = 재생이 끝나야 프로그램이 돌아감
+// SND_FILENAME  = 매개 변수가 파일이름일떄 
+// SND_LOOP  = 반복재생
+// SND_PURGE = 재생중지 
+// PlaySound(TEXT(SOUND_FILE_NAME), NULL,SND_ASYNC|SND_ALIAS);
+/////
 
 #include "filetobuf.h"
 #define weight 600
@@ -437,6 +447,8 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 GLvoid drawScene() {
 	GLfloat rColor, gColor, bColor;
 	rColor = gColor = bColor = 0.0;
+
+	PlaySound(TEXT("test1.wav"), NULL, SND_ASYNC | SND_ALIAS|SND_LOOP);
 
 	glClearColor(rColor, gColor, bColor, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

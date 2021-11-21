@@ -28,6 +28,10 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resource\Sound\test1.wav" />
+    <Media Include="Resource\Sound\thema_1.mp3" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{F609C481-F8D5-4066-87B3-78F948032F60}</ProjectGuid>

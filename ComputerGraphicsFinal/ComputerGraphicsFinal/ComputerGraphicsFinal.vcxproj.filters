@@ -32,4 +32,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resource\Sound\thema_1.mp3">
+      <Filter>소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\test1.wav">
+      <Filter>소스 파일</Filter>
+    </Media>
+  </ItemGroup>
 </Project>

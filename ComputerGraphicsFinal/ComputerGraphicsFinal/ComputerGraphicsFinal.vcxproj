@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="filetobuf.h" />
+    <ClInclude Include="obj.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.glsl" />

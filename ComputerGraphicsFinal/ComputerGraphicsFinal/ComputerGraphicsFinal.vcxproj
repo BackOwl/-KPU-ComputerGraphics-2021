@@ -24,6 +24,7 @@
     <ClInclude Include="obj.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="timer_.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.glsl" />
@@ -33,6 +34,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="timer_.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resource\Sound\test1.wav" />
@@ -51,6 +53,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>

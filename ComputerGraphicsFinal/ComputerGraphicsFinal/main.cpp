@@ -1,5 +1,6 @@
 #pragma comment(lib, "glew32.lib")
 #pragma comment(lib, "freeglut.lib")
+
 #include <iostream>
 #include <gl/glew.h>
 #include <gl/freeglut.h>
@@ -9,7 +10,7 @@
 #include <gl/glm/gtc/matrix_transform.hpp>
 #include <random>
 #include <malloc.h>
-#include <stdio.h>
+//#include <stdio.h>
 /////
 #pragma comment(lib,"winmm")
 #include < mmsystem.h> 
@@ -25,6 +26,7 @@
 #include "obj.h"
 #include "player.h"
 #include "enemy.h"
+#include "timer_.h"
 
 #define weight 600
 #define height 600
@@ -47,6 +49,7 @@ void Timer(int value);
 GLuint shaderID;
 
 void Init();
+void Update();
 
 
 GLuint vertexShader, fragmentShader;
@@ -54,10 +57,17 @@ GLchar* vertexsource, * fragmentsource;
 
 
 Player* player;
+Timer_* timer;
+
 int prev_x, prev_y;	// 마우스 이전 좌표 저장
 
 void Init() {
 	player = new Player();
+	timer = new Timer_();
+}
+
+void Update() {
+	timer->Update();
 }
 
 bool make_fragmentShaders()
@@ -230,6 +240,8 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 }
 
 GLvoid drawScene() {
+	Update();
+
 	GLfloat rColor, gColor, bColor;
 	rColor = gColor = bColor = 1.0;
 
@@ -296,6 +308,7 @@ GLvoid drawScene() {
 }
 
 GLvoid Timer(int value) {
+	
 }
 
 GLvoid Reshape(int w, int h) //--- 콜백 함수: 다시 그리기 콜백 함수
@@ -328,7 +341,7 @@ void Drag(int x, int y)
 {
 	int x_dist = x - prev_x; int y_dist = y - prev_y;
 	if (x_dist < 400 and y_dist < 400) {
-		player->Rotate(x_dist, y_dist);
+		player->Rotate(x_dist, y_dist, timer->DeltaTime());
 	}
 	prev_x = x; prev_y = y;
 			

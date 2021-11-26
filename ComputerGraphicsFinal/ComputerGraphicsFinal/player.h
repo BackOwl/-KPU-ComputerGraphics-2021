@@ -1,5 +1,7 @@
 #pragma once
 #include "character.h"
+#ifndef player_
+#define player_
 
 class Player : public Character {
 private:
@@ -17,12 +19,14 @@ public:
 		speed = 1.0;	// 적절한 값으로 수정 필요
 		shot_bool = false;	// 총을 쏠 수 있는 상태인지
 	};
-	~Player() {};
+	~Player() = default;
 
 	void Move_Right();
 	void Move_Left();
 	void Move_Front();
 	void Move_Back();
 
-	void Rotate(int mouse_x, int mouse_y);	// 마우스 좌표에 따라 회전.  현재 마우스 좌표 - 이전 마우스 좌표의 값을 받아온다 
+	void Rotate(int mouse_x, int mouse_y, float time);	// 마우스 좌표에 따라 회전.  현재 마우스 좌표 - 이전 마우스 좌표의 값을 받아온다 
 };
+
+#endif

@@ -1,5 +1,6 @@
 #pragma comment(lib, "glew32.lib")
 #pragma comment(lib, "freeglut.lib")
+
 #include <iostream>
 #include <gl/glew.h>
 #include <gl/freeglut.h>
@@ -9,7 +10,7 @@
 #include <gl/glm/gtc/matrix_transform.hpp>
 #include <random>
 #include <malloc.h>
-#include <stdio.h>
+//#include <stdio.h>
 /////
 #pragma comment(lib,"winmm")
 #include < mmsystem.h> 
@@ -23,6 +24,10 @@
 
 #include "filetobuf.h"
 #include "obj.h"
+#include "player.h"
+#include "enemy.h"
+#include "timer_.h"
+
 #define weight 600
 #define height 600
 #pragma warning(disable:4996)
@@ -37,13 +42,33 @@ GLuint make_shaderProgram();
 GLvoid drawScene();
 GLvoid Reshape(int w, int h);
 GLvoid Keyboard(unsigned char key, int x, int y);
+void Mouse(int button, int state, int x, int y);
+void Drag(int x, int y);
+
 void Timer(int value);
 GLuint shaderID;
+
+void Init();
+void Update();
 
 
 GLuint vertexShader, fragmentShader;
 GLchar* vertexsource, * fragmentsource;
 
+
+Player* player;
+Timer_* timer;
+
+int prev_x, prev_y;	// 마우스 이전 좌표 저장
+
+void Init() {
+	player = new Player();
+	timer = new Timer_();
+}
+
+void Update() {
+	timer->Update();
+}
 
 bool make_fragmentShaders()
 {
@@ -181,6 +206,7 @@ GLuint make_shaderProgram()
 
 void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 {
+	Init();
 	//--- 윈도우 생성하기
 	glutInit(&argc, argv); // glut 초기화
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH); // 디스플레이 모드 설정
@@ -207,11 +233,15 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glutDisplayFunc(drawScene); // 출력 콜백함수의 지정
 	glutReshapeFunc(Reshape); // 다시 그리기 콜백함수 지정
 	glutKeyboardFunc(Keyboard);
+	glutMouseFunc(Mouse);
+	glutPassiveMotionFunc(Drag);
 	glutMainLoop(); // 이벤트 처리 시작
 
 }
 
 GLvoid drawScene() {
+	Update();
+
 	GLfloat rColor, gColor, bColor;
 	rColor = gColor = bColor = 1.0;
 
@@ -220,21 +250,25 @@ GLvoid drawScene() {
 	glClearColor(rColor, gColor, bColor, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glm::vec3 cameraPos = glm::vec3(5.0f, 0.0f, 0.0f);
-	glm::vec3 cameraDirection = glm::vec3(0.0f, 0.0f, 0.0f); //--- 카메라 바라보는 방향
+	float x, y, z;
+	player->GetPos(&x, &y, &z);
+
+	glm::vec3 cameraPos = glm::vec3(x, y, z);
+	glm::vec3 cameraDirection = glm::vec3(x, y, z + 1.0); //--- 카메라 바라보는 방향
 	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);	//glm::cross(cameraDirection, cameraRight);
 	glm::mat4 view = glm::mat4(1.0f);
 
 	view = glm::lookAt(cameraPos, cameraDirection, cameraUp);
-	view = glm::rotate(view, (GLfloat)glm::radians(float(30.0)), glm::vec3(1.0f, 0.0f, 0.0f));
+	//view = glm::rotate(view, (GLfloat)glm::radians(float(30.0)), glm::vec3(1.0f, 0.0f, 0.0f));
 	unsigned int viewLocation = glGetUniformLocation(shaderID, "viewTransform"); //--- 버텍스 세이더에서 viewTransform 변수위치
 	glUniformMatrix4fv(viewLocation, 1, GL_FALSE, &view[0][0]);
 
 	glm::mat4 projection = glm::mat4(1.0f);
 
 	projection = glm::perspective(glm::radians(45.0f), (float)weight / (float)height, 0.1f, 50.0f);
-	projection = glm::translate(projection, glm::vec3(0.0, 0.0, 0.0)); //--- 공간을 약간 뒤로 미뤄줌
-
+	//projection = glm::translate(projection, glm::vec3(0.0, 0.0, 0.0)); //--- 공간을 약간 뒤로 미뤄줌
+	projection = glm::rotate(projection, (GLfloat)glm::radians(player->GetXangle()), glm::vec3(0.0f, 1.0f, 0.0f));
+	projection = glm::rotate(projection, (GLfloat)glm::radians(player->GetYangle()), glm::vec3(1.0f, 0.0f, 0.0f));
 
 	unsigned int projectionLocation = glGetUniformLocation(shaderID, "projectionTransform"); //--- 투영 변환 값 설정
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
@@ -274,6 +308,7 @@ GLvoid drawScene() {
 }
 
 GLvoid Timer(int value) {
+	
 }
 
 GLvoid Reshape(int w, int h) //--- 콜백 함수: 다시 그리기 콜백 함수
@@ -282,7 +317,33 @@ GLvoid Reshape(int w, int h) //--- 콜백 함수: 다시 그리기 콜백 함수
 }
 
 GLvoid Keyboard(unsigned char key, int x, int y) {
-	int i = 0;
+
 	switch (key) {
 	}
+	glutPostRedisplay();
+}
+
+void Mouse(int button, int state, int x, int y)
+{
+
+	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
+	{
+		// 주인공 총 발사
+	}
+
+	prev_x = x; prev_y = y;
+
+	glutPostRedisplay();
+}
+
+
+void Drag(int x, int y)
+{
+	int x_dist = x - prev_x; int y_dist = y - prev_y;
+	if (x_dist < 400 and y_dist < 400) {
+		player->Rotate(x_dist, y_dist, timer->DeltaTime());
+	}
+	prev_x = x; prev_y = y;
+			
+	glutPostRedisplay();
 }

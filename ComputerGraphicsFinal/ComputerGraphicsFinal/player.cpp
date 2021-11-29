@@ -1,6 +1,11 @@
 #include "player.h"
 #include <iostream>
 
+void Player::Update(int window_x, int window_y, int width, int height)
+{
+	Rotate(window_x, window_y, width, height);
+}
+
 void Player::Move_Right() 
 {
 
@@ -19,14 +24,15 @@ void Player::Move_Back()
 
 }
 
-void Player::Rotate(int mouse_x, int mouse_y, float time)	// 마우스 좌표에 따라 회전.  현재 마우스 좌표 - 이전 마우스 좌표의 값을 받아온다 
+void Player::Rotate(int x, int y, int width, int height)	// 마우스 좌표에 따라 회전
 {
-	if (mouse_x < 50 && mouse_x > -50 && mouse_y < 50 && mouse_y > -50) {
-		x_angle += (float)mouse_x * time * 3.0;
-		y_angle += (float)mouse_y * time * 3.0;
-	}
+	POINT current_mouse;
+	GetCursorPos(&current_mouse);
+	int x_dist = current_mouse.x - (x + width / 2);
+	int y_dist = current_mouse.y - (y + height / 2);
 
-	//std::cout << "time = " << time << ", x_angle = " << x_angle << ", y_angle = " << y_angle << std::endl;
+	x_angle += (float)x_dist / 30;	// 감도 조정 필요
+	y_angle += (float)y_dist / 30;
 
 	if (y_angle < -90.0) {
 		y_angle = -90.0;
@@ -34,4 +40,6 @@ void Player::Rotate(int mouse_x, int mouse_y, float time)	// 마우스 좌표에 따라 
 	if (y_angle > 90.0) {
 		y_angle = 90.0;
 	}
+	
+	SetCursorPos(x + width / 2, y + height / 2);	// 임시로 해놓은것 화면 중앙 좌표
 }

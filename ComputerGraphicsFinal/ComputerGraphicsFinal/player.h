@@ -1,5 +1,6 @@
 #pragma once
 #include "character.h"
+#include "windows.h"
 #ifndef player_
 #define player_
 
@@ -17,16 +18,21 @@ public:
 		x_width = 0.4; height = 1.0, z_width = 0.2; // 충돌처리시 사용, 추후 적절한 값 찾아 수정 필요
 		x_angle = 0.0; y_angle = 0.0;
 		speed = 1.0;	// 적절한 값으로 수정 필요
-		shot_bool = false;	// 총을 쏠 수 있는 상태인지
+
+		gun = new Gun(x, y, z + 1.0, x_angle, y_angle);
 	};
-	~Player() = default;
+	~Player() {
+		delete(gun);
+	};
+
+	void Update(int window_x, int window_y, int width, int height);
 
 	void Move_Right();
 	void Move_Left();
 	void Move_Front();
 	void Move_Back();
 
-	void Rotate(int mouse_x, int mouse_y, float time);	// 마우스 좌표에 따라 회전.  현재 마우스 좌표 - 이전 마우스 좌표의 값을 받아온다 
+	void Rotate(int x, int y, int width, int height);	// 마우스 좌표에 따라 회전.  현재 마우스 좌표 - 이전 마우스 좌표의 값을 받아온다 
 };
 
 #endif

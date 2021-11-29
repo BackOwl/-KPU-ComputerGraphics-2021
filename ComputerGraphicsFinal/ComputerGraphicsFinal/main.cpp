@@ -28,7 +28,7 @@
 #include "enemy.h"
 #include "timer_.h"
 
-#define weight 600
+#define width 600
 #define height 600
 #pragma warning(disable:4996)
 
@@ -43,7 +43,6 @@ GLvoid drawScene();
 GLvoid Reshape(int w, int h);
 GLvoid Keyboard(unsigned char key, int x, int y);
 void Mouse(int button, int state, int x, int y);
-void Drag(int x, int y);
 
 void Timer(int value);
 GLuint shaderID;
@@ -59,15 +58,22 @@ GLchar* vertexsource, * fragmentsource;
 Player* player;
 Timer_* timer;
 
-int prev_x, prev_y;	// 마우스 이전 좌표 저장
+POINT prev_mouse;	// 마우스 이전 좌표 저장
 
 void Init() {
+	
 	player = new Player();
 	timer = new Timer_();
 }
 
 void Update() {
+	ShowCursor(FALSE);
+	int x = glutGet(GLUT_WINDOW_X);
+	int y = glutGet(GLUT_WINDOW_Y);
+	int window_width = glutGet(GLUT_WINDOW_WIDTH);
+	int window_height = glutGet(GLUT_WINDOW_HEIGHT);
 	timer->Update();
+	player->Update(x, y, window_width, window_height);
 }
 
 bool make_fragmentShaders()
@@ -89,6 +95,8 @@ bool make_fragmentShaders()
 		return false;
 	}
 	return true;
+
+	
 }
 bool make_vertexShader()
 {
@@ -211,7 +219,7 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glutInit(&argc, argv); // glut 초기화
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH); // 디스플레이 모드 설정
 	glutInitWindowPosition(100, 100); // 윈도우의 위치 지정
-	glutInitWindowSize(weight, height); // 윈도우의 크기 지정
+	glutInitWindowSize(width, height); // 윈도우의 크기 지정
 	glutCreateWindow("super hot"); // 윈도우 생성(윈도우 이름 )
 
 	glEnable(GL_DEPTH_TEST);    //--- GLEW 초기화하기
@@ -234,13 +242,13 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glutReshapeFunc(Reshape); // 다시 그리기 콜백함수 지정
 	glutKeyboardFunc(Keyboard);
 	glutMouseFunc(Mouse);
-	glutPassiveMotionFunc(Drag);
+	glutTimerFunc(10, Timer, 1);
 	glutMainLoop(); // 이벤트 처리 시작
 
 }
 
 GLvoid drawScene() {
-	Update();
+	
 
 	GLfloat rColor, gColor, bColor;
 	rColor = gColor = bColor = 1.0;
@@ -265,7 +273,7 @@ GLvoid drawScene() {
 
 	glm::mat4 projection = glm::mat4(1.0f);
 
-	projection = glm::perspective(glm::radians(45.0f), (float)weight / (float)height, 0.1f, 50.0f);
+	projection = glm::perspective(glm::radians(45.0f), (float)width / (float)height, 0.1f, 50.0f);
 	//projection = glm::translate(projection, glm::vec3(0.0, 0.0, 0.0)); //--- 공간을 약간 뒤로 미뤄줌
 	projection = glm::rotate(projection, (GLfloat)glm::radians(player->GetXangle()), glm::vec3(0.0f, 1.0f, 0.0f));
 	projection = glm::rotate(projection, (GLfloat)glm::radians(player->GetYangle()), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -308,7 +316,10 @@ GLvoid drawScene() {
 }
 
 GLvoid Timer(int value) {
-	
+	Update();
+
+	glutPostRedisplay();
+	glutTimerFunc(10, Timer, 1);
 }
 
 GLvoid Reshape(int w, int h) //--- 콜백 함수: 다시 그리기 콜백 함수
@@ -319,6 +330,9 @@ GLvoid Reshape(int w, int h) //--- 콜백 함수: 다시 그리기 콜백 함수
 GLvoid Keyboard(unsigned char key, int x, int y) {
 
 	switch (key) {
+	case 'q':
+	case 'Q':
+		glutLeaveMainLoop();
 	}
 	glutPostRedisplay();
 }
@@ -331,19 +345,7 @@ void Mouse(int button, int state, int x, int y)
 		// 주인공 총 발사
 	}
 
-	prev_x = x; prev_y = y;
+	GetCursorPos(&prev_mouse);
 
-	glutPostRedisplay();
-}
-
-
-void Drag(int x, int y)
-{
-	int x_dist = x - prev_x; int y_dist = y - prev_y;
-	if (x_dist < 400 and y_dist < 400) {
-		player->Rotate(x_dist, y_dist, timer->DeltaTime());
-	}
-	prev_x = x; prev_y = y;
-			
 	glutPostRedisplay();
 }

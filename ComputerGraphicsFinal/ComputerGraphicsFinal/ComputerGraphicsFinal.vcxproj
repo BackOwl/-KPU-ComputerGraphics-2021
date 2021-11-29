@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="enemy.h" />
     <ClInclude Include="filetobuf.h" />
+    <ClInclude Include="gun.h" />
     <ClInclude Include="obj.h" />
     <ClInclude Include="character.h" />
     <ClInclude Include="player.h" />
@@ -31,6 +32,7 @@
     <None Include="vertex.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="gun.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="character.cpp" />
     <ClCompile Include="player.cpp" />

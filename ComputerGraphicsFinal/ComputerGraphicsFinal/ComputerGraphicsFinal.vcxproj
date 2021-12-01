@@ -19,15 +19,24 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="enemy.h" />
     <ClInclude Include="filetobuf.h" />
+    <ClInclude Include="gun.h" />
     <ClInclude Include="obj.h" />
+    <ClInclude Include="character.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="timer_.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.glsl" />
     <None Include="vertex.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="gun.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="character.cpp" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="timer_.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resource\Sound\test1.wav" />
@@ -46,6 +55,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>

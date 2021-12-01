@@ -19,7 +19,7 @@ public:
 		QueryPerformanceCounter(&curTime);
 		QueryPerformanceCounter(&prevTime);
 	};
-	~Timer_() = delete;
+	~Timer_() = default;
 	
 	float DeltaTime();	// 화면 회전 등에 사용
 

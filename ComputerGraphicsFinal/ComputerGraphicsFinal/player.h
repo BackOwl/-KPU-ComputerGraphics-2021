@@ -18,12 +18,10 @@ public:
 		x_width = 0.4; height = 1.0, z_width = 0.2; // 충돌처리시 사용, 추후 적절한 값 찾아 수정 필요
 		x_angle = 0.0; y_angle = 0.0;
 		speed = 1.0;	// 적절한 값으로 수정 필요
-
-		gun = new Gun(x, y, z + 1.0, x_angle, y_angle);
+		gun = Gun(x, y, z, x_angle, y_angle);
+		//gun = Gun(0, 0, 0, 0, 0);
 	};
-	~Player() {
-		delete(gun);
-	};
+	~Player() = default;
 
 	void Update(int window_x, int window_y, int width, int height);
 

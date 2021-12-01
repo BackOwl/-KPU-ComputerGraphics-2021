@@ -4,6 +4,7 @@
 void Player::Update(int window_x, int window_y, int width, int height)
 {
 	Rotate(window_x, window_y, width, height);
+	gun.Set(x, y, z, x_angle, y_angle);
 }
 
 void Player::Move_Right() 

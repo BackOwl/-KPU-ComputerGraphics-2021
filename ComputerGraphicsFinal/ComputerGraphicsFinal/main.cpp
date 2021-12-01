@@ -48,6 +48,7 @@ void Timer(int value);
 GLuint shaderID;
 
 void Init();
+void Delete();
 void Update();
 
 
@@ -61,9 +62,13 @@ Timer_* timer;
 POINT prev_mouse;	// 마우스 이전 좌표 저장
 
 void Init() {
-	
 	player = new Player();
 	timer = new Timer_();
+}
+
+void Delete() {
+	delete player;
+	delete timer;
 }
 
 void Update() {
@@ -304,14 +309,15 @@ GLvoid drawScene() {
 	glUniform3f(viewPos, Viewl.x, Viewl.y, Viewl.z);
 
 	glBindVertexArray(vao);
-
+	/*
 	glm::mat4 Si = glm::scale(glm::mat4(1.0f), glm::vec3(0.2, 0.2, 0.2));
 	//glm::mat4 Light = Tr * Si;
 	glUniform3f(colorLocation, 0.0, 0.0, 0.0);
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(Si));
 
 	glDrawArrays(GL_TRIANGLES, 0, num_Triangle);
-
+	*/
+	player->gun.Draw(modelLocation, colorLocation, num_Triangle);
 	glutSwapBuffers();
 }
 

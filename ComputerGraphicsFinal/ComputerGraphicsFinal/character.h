@@ -15,6 +15,11 @@ public:
 	Character() = default;
 	~Character() = default;
 
+	void Move_Right(float time);
+	void Move_Left(float time);
+	void Move_Front(float time);
+	void Move_Back(float time);
+
 	void GetPos(float* input_x, float* input_y, float* input_z);
 	float GetXangle();
 	float GetYangle();

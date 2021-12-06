@@ -24,9 +24,9 @@ public:
 		x_angle = s_x_angle;
 		y_angle = s_y_angle;
 		len = 0.0;
-		x_width = height = z_width = 0.1;
+		x_width = height = z_width = 0.01;
 
-		speed = 100.0;
+		speed = 30.0;
 	}
 	~Bullet() = default;
 

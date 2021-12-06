@@ -64,21 +64,21 @@ Timer_* timer;
 
 POINT prev_mouse;	// 마우스 이전 좌표 저장
 
-std::vector<Bullet*> bullet;	// 모든 총알 여기서 관리
+std::vector<Bullet> bullet;	// 모든 총알 여기서 관리
 
 
-void update_bullet(std::vector<Bullet*> v, float time) {
-	for (int i = 0; i < v.size(); ++i) {
-		v[i]->Update(time);
+void update_bullet(std::vector<Bullet>* v, float time) {
+	for (int i = 0; i < v->size(); ++i) {
+		(*v)[i].Update(time);
 		
 	}
+
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	int i = 0;
-	for (std::vector<Bullet*>::iterator it = v.begin(); it!= v.end(); it++)
+	for (std::vector<Bullet>::iterator it = v->begin(); it!= v->end(); it++)
 	{
-		if (v[i]->len_check()) {
-			//delete (*it);		// 메모리 해제시 오류 해결 필요
-			it = v.erase(it);
+		if ((*v)[i].len_check()) {	
+			it = v->erase(it);
 			break;
 		}
 		++i;
@@ -86,9 +86,9 @@ void update_bullet(std::vector<Bullet*> v, float time) {
 
 }
 
-void draw_bullet(std::vector<Bullet*> v, unsigned int modelLocation, unsigned int colorLocation, int numTriangle) {
-	for (int i = 0; i < v.size(); ++i) {
-		v[i]->Draw(modelLocation, colorLocation, numTriangle);
+void draw_bullet(std::vector<Bullet>* v, unsigned int modelLocation, unsigned int colorLocation, int numTriangle) {
+	for (int i = 0; i < v->size(); ++i) {
+		(*v)[i].Draw(modelLocation, colorLocation, numTriangle);
 	}
 }
 
@@ -143,7 +143,7 @@ void Update() {
 	int window_height = glutGet(GLUT_WINDOW_HEIGHT);
 	timer->Update();
 	player->Update(x, y, window_width, window_height);
-	update_bullet(bullet, timer->SlowDeltaTime());
+	update_bullet(&bullet, timer->SlowDeltaTime());
 }
 
 bool make_fragmentShaders()
@@ -392,7 +392,7 @@ GLvoid drawScene() {
 	
 	player->gun.Draw(modelLocation, colorLocation, num_Triangle);
 	glBindVertexArray(vao[1]);
-	draw_bullet(bullet, modelLocation, colorLocation, 36);
+	draw_bullet(&bullet, modelLocation, colorLocation, 36);
 	glutSwapBuffers();
 }
 
@@ -413,15 +413,19 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
 	switch (key) {
 	case 'w':
 		player->Move_Front(timer->SlowDeltaTime());
+		timer->SetTimerFast();
 		break;
 	case 'a':
 		player->Move_Left(timer->SlowDeltaTime());
+		timer->SetTimerFast();
 		break;
 	case 's':
 		player->Move_Back(timer->SlowDeltaTime());
+		timer->SetTimerFast();
 		break;
 	case 'd':
 		player->Move_Right(timer->SlowDeltaTime());
+		timer->SetTimerFast();
 		break;
 	case 'q':
 	case 'Q':
@@ -437,7 +441,7 @@ void Mouse(int button, int state, int x, int y)
 	{
 		float x, y, z;
 		player->GetPos(&x, &y, &z);
-		bullet.push_back(new Bullet(x, y, z, player->GetXangle(), player->GetYangle()));
+		bullet.push_back(Bullet(x, y, z, player->GetXangle(), player->GetYangle()));
 		std::cout << "bullet" << bullet.size() << std::endl;
 		// 주인공 총 발사
 	}

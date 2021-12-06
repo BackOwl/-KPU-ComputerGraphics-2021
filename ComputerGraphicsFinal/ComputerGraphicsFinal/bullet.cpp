@@ -6,7 +6,7 @@ void Bullet::Update(float time) {
 	y += speed * time * sin(glm::radians(-y_angle));
 
 	len = sqrt(pow(x - start_x, 2) + pow(y - start_y, 2) + pow(z - start_z, 2));
-	if (len < 5.0) {
+	if (len < 2.0) {
 		z_width = len;
 	}
 	

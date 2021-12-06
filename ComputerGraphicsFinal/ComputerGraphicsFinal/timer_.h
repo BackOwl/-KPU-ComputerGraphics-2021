@@ -25,6 +25,8 @@ public:
 
 	float SlowDeltaTime();	// 캐릭터 이동, 총알 이동, 총 발사 시 반동 등에 사용
 
+	void  SetTimerFast();
+
 	void Update();
 
 	void Reset();

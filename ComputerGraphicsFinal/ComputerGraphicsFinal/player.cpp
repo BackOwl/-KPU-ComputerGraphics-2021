@@ -4,24 +4,7 @@
 void Player::Update(int window_x, int window_y, int width, int height)
 {
 	Rotate(window_x, window_y, width, height);
-}
-
-void Player::Move_Right() 
-{
-
-}
-
-void Player::Move_Left()
-{
-
-}
-void Player::Move_Front()
-{
-
-}
-void Player::Move_Back() 
-{
-
+	gun.Set(x, y, z, x_angle, y_angle);
 }
 
 void Player::Rotate(int x, int y, int width, int height)	// 마우스 좌표에 따라 회전

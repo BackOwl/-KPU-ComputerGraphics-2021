@@ -10,6 +10,8 @@
 #include <gl/glm/gtc/matrix_transform.hpp>
 #include <random>
 #include <malloc.h>
+#include <vector>
+#include <crtdbg.h>
 //#include <stdio.h>
 /////
 #pragma comment(lib,"winmm")
@@ -27,13 +29,14 @@
 #include "player.h"
 #include "enemy.h"
 #include "timer_.h"
+#include "bullet.h"
 
 #define width 600
 #define height 600
 #pragma warning(disable:4996)
 
 int num_Triangle;
-GLuint vao, vbo[2];
+GLuint vao[2], vbo[4];
 
 bool make_vertexShader();
 bool make_fragmentShaders();
@@ -48,6 +51,7 @@ void Timer(int value);
 GLuint shaderID;
 
 void Init();
+void Delete();
 void Update();
 
 
@@ -60,10 +64,75 @@ Timer_* timer;
 
 POINT prev_mouse;	// 마우스 이전 좌표 저장
 
+std::vector<Bullet> bullet;	// 모든 총알 여기서 관리
+
+
+void update_bullet(std::vector<Bullet>* v, float time) {
+	for (int i = 0; i < v->size(); ++i) {
+		(*v)[i].Update(time);
+		
+	}
+
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	int i = 0;
+	for (std::vector<Bullet>::iterator it = v->begin(); it!= v->end(); it++)
+	{
+		if ((*v)[i].len_check()) {	
+			it = v->erase(it);
+			break;
+		}
+		++i;
+	}
+
+}
+
+void draw_bullet(std::vector<Bullet>* v, unsigned int modelLocation, unsigned int colorLocation, int numTriangle) {
+	for (int i = 0; i < v->size(); ++i) {
+		(*v)[i].Draw(modelLocation, colorLocation, numTriangle);
+	}
+}
+
+GLfloat cube[36][3] = { //--- 버텍스 속성: 좌표값(FragPos), 노말값 (Normal)
+	{-0.5f, -0.5f, -0.5f}, {0.5f, -0.5f, -0.5f}, {0.5f, 0.5f, -0.5f},
+	{0.5f, 0.5f, -0.5f}, {-0.5f, 0.5f, -0.5f}, {-0.5f, -0.5f, -0.5f },
+-0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
+0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, -0.5f, 0.5f,
+-0.5f, 0.5f, 0.5f, -0.5f, 0.5f, -0.5f, -0.5f, -0.5f, -0.5f,
+-0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f,
+0.5f, 0.5f, 0.5f, 0.5f, 0.5f, -0.5f, 0.5f, -0.5f, -0.5f,
+0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
+-0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f,
+0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f, -0.5f,
+-0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f,
+0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, -0.5f
+};
+
+GLfloat cube_normal[36][3] = { //--- 버텍스 속성: 좌표값(FragPos), 노말값 (Normal)
+0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f,
+0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f,
+0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+-1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
+-1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
+1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f,
+0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f,
+0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f
+};
+
+
+
+
 void Init() {
-	
 	player = new Player();
 	timer = new Timer_();
+}
+
+void Delete() {
+	delete player;
+	delete timer;
 }
 
 void Update() {
@@ -74,6 +143,7 @@ void Update() {
 	int window_height = glutGet(GLUT_WINDOW_HEIGHT);
 	timer->Update();
 	player->Update(x, y, window_width, window_height);
+	update_bullet(&bullet, timer->SlowDeltaTime());
 }
 
 bool make_fragmentShaders()
@@ -142,16 +212,26 @@ void InitBuffer()
 
 	num_Triangle = obj.num;
 
-	glGenVertexArrays(1, &vao); //--- VAO 를 지정하고 할당하기
-	glGenBuffers(2, vbo); //--- 2개의 VBO를 지정하고 할당하기
+	glGenVertexArrays(2, vao); //--- VAO 를 지정하고 할당하기
+	glGenBuffers(4, vbo); //--- 2개의 VBO를 지정하고 할당하기
 
-	glBindVertexArray(vao);
+	glBindVertexArray(vao[0]);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
 	glBufferData(GL_ARRAY_BUFFER, obj.outvertex.size() * sizeof(glm::vec3), &obj.outvertex[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
 	glBufferData(GL_ARRAY_BUFFER, obj.outnormal.size() * sizeof(glm::vec3), &obj.outnormal[0], GL_STATIC_DRAW);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+	glEnableVertexAttribArray(1);
+
+	glBindVertexArray(vao[1]);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo[2]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(cube), cube, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo[3]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(cube_normal), cube_normal, GL_STATIC_DRAW);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 	glEnableVertexAttribArray(1);
 	//glBindVertexArray(VAO[]);
@@ -267,16 +347,14 @@ GLvoid drawScene() {
 	glm::mat4 view = glm::mat4(1.0f);
 
 	view = glm::lookAt(cameraPos, cameraDirection, cameraUp);
-	//view = glm::rotate(view, (GLfloat)glm::radians(float(30.0)), glm::vec3(1.0f, 0.0f, 0.0f));
 	unsigned int viewLocation = glGetUniformLocation(shaderID, "viewTransform"); //--- 버텍스 세이더에서 viewTransform 변수위치
 	glUniformMatrix4fv(viewLocation, 1, GL_FALSE, &view[0][0]);
 
 	glm::mat4 projection = glm::mat4(1.0f);
 
 	projection = glm::perspective(glm::radians(45.0f), (float)width / (float)height, 0.1f, 50.0f);
-	//projection = glm::translate(projection, glm::vec3(0.0, 0.0, 0.0)); //--- 공간을 약간 뒤로 미뤄줌
-	projection = glm::rotate(projection, (GLfloat)glm::radians(player->GetXangle()), glm::vec3(0.0f, 1.0f, 0.0f));
 	projection = glm::rotate(projection, (GLfloat)glm::radians(player->GetYangle()), glm::vec3(1.0f, 0.0f, 0.0f));
+	projection = glm::rotate(projection, (GLfloat)glm::radians(player->GetXangle()), glm::vec3(0.0f, 1.0f, 0.0f));
 
 	unsigned int projectionLocation = glGetUniformLocation(shaderID, "projectionTransform"); //--- 투영 변환 값 설정
 	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, &projection[0][0]);
@@ -303,15 +381,18 @@ GLvoid drawScene() {
 
 	glUniform3f(viewPos, Viewl.x, Viewl.y, Viewl.z);
 
-	glBindVertexArray(vao);
-
+	glBindVertexArray(vao[0]);
+	
 	glm::mat4 Si = glm::scale(glm::mat4(1.0f), glm::vec3(0.2, 0.2, 0.2));
 	//glm::mat4 Light = Tr * Si;
 	glUniform3f(colorLocation, 0.0, 0.0, 0.0);
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(Si));
 
 	glDrawArrays(GL_TRIANGLES, 0, num_Triangle);
-
+	
+	player->gun.Draw(modelLocation, colorLocation, num_Triangle);
+	glBindVertexArray(vao[1]);
+	draw_bullet(&bullet, modelLocation, colorLocation, 36);
 	glutSwapBuffers();
 }
 
@@ -330,6 +411,22 @@ GLvoid Reshape(int w, int h) //--- 콜백 함수: 다시 그리기 콜백 함수
 GLvoid Keyboard(unsigned char key, int x, int y) {
 
 	switch (key) {
+	case 'w':
+		player->Move_Front(timer->SlowDeltaTime());
+		timer->SetTimerFast();
+		break;
+	case 'a':
+		player->Move_Left(timer->SlowDeltaTime());
+		timer->SetTimerFast();
+		break;
+	case 's':
+		player->Move_Back(timer->SlowDeltaTime());
+		timer->SetTimerFast();
+		break;
+	case 'd':
+		player->Move_Right(timer->SlowDeltaTime());
+		timer->SetTimerFast();
+		break;
 	case 'q':
 	case 'Q':
 		glutLeaveMainLoop();
@@ -342,6 +439,10 @@ void Mouse(int button, int state, int x, int y)
 
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
+		float x, y, z;
+		player->GetPos(&x, &y, &z);
+		bullet.push_back(Bullet(x, y, z, player->GetXangle(), player->GetYangle()));
+		std::cout << "bullet" << bullet.size() << std::endl;
 		// 주인공 총 발사
 	}
 

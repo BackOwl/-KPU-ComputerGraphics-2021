@@ -15,13 +15,19 @@ void  Timer_::Update()
 	QueryPerformanceCounter(&curTime);
 	deltaTime = (static_cast<double>(curTime.QuadPart) - static_cast<double>(prevTime.QuadPart)) / static_cast<double>(tSecond.QuadPart);
 	if (slow) {
-		deltaSlowTime = deltaTime / 5.0;
+		deltaSlowTime = deltaTime / 10.0;
 	}
 	else {
 		deltaSlowTime = deltaTime;
 	}
 
+	slow = true;
 	QueryPerformanceCounter(&prevTime);
+}
+
+void  Timer_::SetTimerFast()
+{
+	slow = false;
 }
 
 void  Timer_::Reset()

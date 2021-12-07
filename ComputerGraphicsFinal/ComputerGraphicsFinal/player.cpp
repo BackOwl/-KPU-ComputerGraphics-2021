@@ -1,10 +1,11 @@
 #include "player.h"
 #include <iostream>
 
-void Player::Update(int window_x, int window_y, int width, int height)
+void Player::Update(int window_x, int window_y, int width, int height, float time)
 {
 	Rotate(window_x, window_y, width, height);
 	gun.Set(x, y, z, x_angle, y_angle);
+	gun.Update(time);
 }
 
 void Player::Rotate(int x, int y, int width, int height)	// 마우스 좌표에 따라 회전

@@ -95,16 +95,16 @@ void draw_bullet(std::vector<Bullet>* v, unsigned int modelLocation, unsigned in
 GLfloat cube[36][3] = { //--- 버텍스 속성: 좌표값(FragPos), 노말값 (Normal)
 	{-0.5f, -0.5f, -0.5f}, {0.5f, -0.5f, -0.5f}, {0.5f, 0.5f, -0.5f},
 	{0.5f, 0.5f, -0.5f}, {-0.5f, 0.5f, -0.5f}, {-0.5f, -0.5f, -0.5f },
--0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
-0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, -0.5f, 0.5f,
--0.5f, 0.5f, 0.5f, -0.5f, 0.5f, -0.5f, -0.5f, -0.5f, -0.5f,
--0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f,
-0.5f, 0.5f, 0.5f, 0.5f, 0.5f, -0.5f, 0.5f, -0.5f, -0.5f,
-0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
--0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f,
-0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f, -0.5f,
--0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f,
-0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, -0.5f
+	-0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
+	0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, -0.5f, 0.5f,
+	-0.5f, 0.5f, 0.5f, -0.5f, 0.5f, -0.5f, -0.5f, -0.5f, -0.5f,
+	-0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f,
+	0.5f, 0.5f, 0.5f, 0.5f, 0.5f, -0.5f, 0.5f, -0.5f, -0.5f,
+	0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
+	-0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f,
+	0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f, -0.5f,
+	-0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f,
+	0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, -0.5f
 };
 
 GLfloat cube_normal[36][3] = { //--- 버텍스 속성: 좌표값(FragPos), 노말값 (Normal)
@@ -142,7 +142,7 @@ void Update() {
 	int window_width = glutGet(GLUT_WINDOW_WIDTH);
 	int window_height = glutGet(GLUT_WINDOW_HEIGHT);
 	timer->Update();
-	player->Update(x, y, window_width, window_height);
+	player->Update(x, y, window_width, window_height, timer->SlowDeltaTime());
 	update_bullet(&bullet, timer->SlowDeltaTime());
 }
 
@@ -439,10 +439,12 @@ void Mouse(int button, int state, int x, int y)
 
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
-		float x, y, z;
-		player->GetPos(&x, &y, &z);
-		bullet.push_back(Bullet(x, y, z, player->GetXangle(), player->GetYangle()));
-		std::cout << "bullet" << bullet.size() << std::endl;
+		if (player->gun.Shot()) {
+			float x, y, z;
+			player->GetPos(&x, &y, &z);
+			bullet.push_back(Bullet(x, y, z, player->GetXangle(), player->GetYangle()));
+		}
+		// std::cout << "bullet" << bullet.size() << std::endl;
 		// 주인공 총 발사
 	}
 

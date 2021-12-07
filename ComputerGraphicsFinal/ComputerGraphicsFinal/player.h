@@ -23,7 +23,7 @@ public:
 	};
 	~Player() = default;
 
-	void Update(int window_x, int window_y, int width, int height);
+	void Update(int window_x, int window_y, int width, int height, float time);
 
 	void Rotate(int x, int y, int width, int height);	// 마우스 좌표에 따라 회전.  현재 마우스 좌표 - 이전 마우스 좌표의 값을 받아온다 
 };

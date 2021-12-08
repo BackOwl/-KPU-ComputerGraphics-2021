@@ -1,3 +1,13 @@
-﻿  gun.cpp
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\gun.cpp(24,29): warning C4244: '-=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  ComputerGraphicsFinal.vcxproj -> C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\Debug\ComputerGraphicsFinal.exe
+﻿  main.cpp
+C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\obj.h(106,29): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\obj.h(107,29): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\obj.h(108,29): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\player.h(21,1): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\bullet.h(27,1): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(72,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(91,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(297,1): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
+C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(415,7): error C2082: 'x' 정식 매개 변수 재정의
+C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(415,10): error C2082: 'y' 정식 매개 변수 재정의
+C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(476,7): error C2082: 'x' 정식 매개 변수 재정의
+C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(476,10): error C2082: 'y' 정식 매개 변수 재정의

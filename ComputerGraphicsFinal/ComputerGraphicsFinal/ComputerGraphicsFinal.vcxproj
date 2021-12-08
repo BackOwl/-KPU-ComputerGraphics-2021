@@ -27,6 +27,8 @@
     <ClInclude Include="character.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="timer_.h" />
+    <ClInclude Include="bullets.h" />
+    <ClInclude Include="enemies.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.glsl" />
@@ -39,6 +41,7 @@
     <ClCompile Include="character.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="timer_.cpp" />
+    <ClCompile Include="enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resource\Sound\test1.wav" />

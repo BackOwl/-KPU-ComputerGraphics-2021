@@ -2,6 +2,7 @@
 #include <gl/glm/gtc/matrix_transform.hpp>
 #include <gl/glew.h>
 #include <gl/glm/ext.hpp>
+#include <vector>
 #ifndef bullet_
 #define bullet_
 
@@ -37,7 +38,6 @@ public:
 	void Draw(unsigned int modelLocation, unsigned int colorLocation, int numTriangle);
 
 };
-
 
 
 #endif

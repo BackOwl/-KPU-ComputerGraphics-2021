@@ -54,6 +54,9 @@ void Init();
 void Delete();
 void Update();
 
+void Key_Update();
+
+
 
 GLuint vertexShader, fragmentShader;
 GLchar* vertexsource, * fragmentsource;
@@ -141,6 +144,7 @@ void Update() {
 	int y = glutGet(GLUT_WINDOW_Y);
 	int window_width = glutGet(GLUT_WINDOW_WIDTH);
 	int window_height = glutGet(GLUT_WINDOW_HEIGHT);
+	Key_Update();
 	timer->Update();
 	player->Update(x, y, window_width, window_height, timer->SlowDeltaTime());
 	update_bullet(&bullet, timer->SlowDeltaTime());
@@ -312,7 +316,6 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	else
 		std::cout << "GLEW Initialized\n";
 
-
 	InitShader();
 	InitBuffer();
 	shaderID = make_shaderProgram(); //--- 세이더 프로그램 만들기
@@ -410,29 +413,33 @@ GLvoid Reshape(int w, int h) //--- 콜백 함수: 다시 그리기 콜백 함수
 
 GLvoid Keyboard(unsigned char key, int x, int y) {
 
-	switch (key) {
-	case 'w':
-		player->Move_Front(timer->SlowDeltaTime());
-		timer->SetTimerFast();
-		break;
-	case 'a':
-		player->Move_Left(timer->SlowDeltaTime());
-		timer->SetTimerFast();
-		break;
-	case 's':
-		player->Move_Back(timer->SlowDeltaTime());
-		timer->SetTimerFast();
-		break;
-	case 'd':
-		player->Move_Right(timer->SlowDeltaTime());
-		timer->SetTimerFast();
-		break;
+	switch (key) {		
 	case 'q':
 	case 'Q':
 		glutLeaveMainLoop();
 	}
 	glutPostRedisplay();
 }
+
+void Key_Update() {	
+	if (GetAsyncKeyState('W')) {
+		player->Move_Front(timer->DeltaTime());
+		timer->SetTimerFast();
+	}
+	if (GetAsyncKeyState('A')) {
+		player->Move_Left(timer->DeltaTime());
+		timer->SetTimerFast();
+	}
+	if (GetAsyncKeyState('S')) {
+		player->Move_Back(timer->DeltaTime());
+		timer->SetTimerFast();
+	}
+	if (GetAsyncKeyState('D')  ) {
+		player->Move_Right(timer->DeltaTime());
+		timer->SetTimerFast();
+	}
+}
+
 
 void Mouse(int button, int state, int x, int y)
 {

@@ -29,7 +29,7 @@ public:
 		x_width = height = z_width = 0.01;
 		character = in_character;
 
-		speed = 30.0;
+		speed = 10.0;
 	}
 	~Bullet() = default;
 

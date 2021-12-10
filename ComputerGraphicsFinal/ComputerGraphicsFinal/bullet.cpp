@@ -33,3 +33,10 @@ bool Bullet::len_check() {
 	}
 	return false;
 }
+
+void Bullet::GetPos(float* input_x, float* input_y, float* input_z)
+{
+	*input_x = x;
+	*input_y = y;
+	*input_z = z;
+}

@@ -1,33 +1,33 @@
 #include "enemy.h"
-#include <iostream>
+//#include <iostream>
 
 void Enemy::Enemy_Move(float pl_x, float pl_z, float time)
 {
-	if (pl_x > x) {
-		Move_Left(time);
-	}
-	else if (pl_x < x) {
-		Move_Right(time);
-	}
-
-	if (pl_z > z) {
+	x_angle = atan2(x - pl_x, pl_z - z);
+	x_angle = x_angle * 180.0 / 3.14159265358979;
+	len = sqrt(pow(x - pl_x, 2) + pow(z - pl_z, 2));
+	
+	if (len > 7.0) {
 		Move_Front(time);
-	}
-	else if (pl_z < z) {
-		Move_Back(time);
 	}
 }
 
 
-void Enemy::Update(float pl_x, float pl_z, float time)
+void Enemy::Update(std::vector<Bullet>* e_b, std::vector<Bullet>* p_b, float pl_x, float pl_z, float time)
 {
 	Enemy_Move(pl_x, pl_z, time);
+	gun.Update(time);
+	if (len < 10.0) {
+		if (gun.Shot()) {
+			e_b->push_back(Bullet(x, y, z, x_angle, y_angle, false));
+		}
+	}
+	collide_bullet(p_b);
 }
 
 
 void Enemy::Draw(unsigned int modelLocation, unsigned int colorLocation, int numTriangle)
 {
-	//printf("draw");
 	glm::mat4 Si = glm::scale(glm::mat4(1.0f), glm::vec3(x_width, height, z_width));
 	glm::mat4 Tr = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, z));
 	glm::mat4 End = Tr * Si;

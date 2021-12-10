@@ -2,9 +2,9 @@
 #include <vector>
 #include "enemy.h"
 
-void update_enemy(std::vector<Enemy>* e, float pl_x, float pl_z, float time) {
+void update_enemy(std::vector<Enemy>* e, std::vector<Bullet>* e_b, std::vector<Bullet>* p_b, float pl_x, float pl_z, float time) {
 	for (int i = 0; i < e->size(); ++i) {
-		(*e)[i].Update(pl_x, pl_z, time);
+		(*e)[i].Update(e_b, p_b, pl_x, pl_z, time);
 
 	}
 }

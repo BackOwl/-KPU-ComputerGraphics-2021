@@ -26,3 +26,5 @@ void draw_bullet(std::vector<Bullet>* v, unsigned int modelLocation, unsigned in
 		(*v)[i].Draw(modelLocation, colorLocation, numTriangle);
 	}
 }
+
+void GetPos(float* input_x, float* input_y, float* input_z);

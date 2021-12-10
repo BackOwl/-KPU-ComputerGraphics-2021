@@ -70,7 +70,8 @@ Timer_* timer;
 
 POINT prev_mouse;	// 마우스 이전 좌표 저장
 
-std::vector<Bullet> bullet;	// 모든 총알 여기서 관리
+std::vector<Bullet> enemy_bullet;	// 적들 총알 여기서 관리
+std::vector<Bullet> player_bullet;	// player 총알 여기서 관리
 std::vector<Enemy> enemy;	// 모든 적 여기서 관리
 
 
@@ -128,15 +129,13 @@ void Update() {
 	int window_height = glutGet(GLUT_WINDOW_HEIGHT);
 	float pl_x, pl_y, pl_z;
 	player->GetPos(&pl_x, &pl_y, &pl_z);
-	update_enemy(&enemy, pl_x, pl_z, timer->SlowDeltaTime());
+	update_enemy(&enemy, &enemy_bullet, &player_bullet, pl_x, pl_z, timer->SlowDeltaTime());
 	Key_Update();
 	timer->Update();
 	
-	player->Update(x, y, window_width, window_height, timer->SlowDeltaTime());
-	update_bullet(&bullet, timer->SlowDeltaTime());
-	
-	
-	
+	player->Update(&enemy_bullet, x, y, window_width, window_height, timer->SlowDeltaTime());
+	update_bullet(&player_bullet, timer->SlowDeltaTime());
+	update_bullet(&enemy_bullet, timer->SlowDeltaTime());
 }
 
 bool make_fragmentShaders()
@@ -397,7 +396,8 @@ GLvoid drawScene() {
 	
 	player->gun.Draw(modelLocation, colorLocation, gun_num_Triangle);
 	glBindVertexArray(vao[1]);
-	draw_bullet(&bullet, modelLocation, colorLocation, 36);
+	draw_bullet(&player_bullet, modelLocation, colorLocation, 36);
+	draw_bullet(&enemy_bullet, modelLocation, colorLocation, 36);
 
 	glBindVertexArray(vao[2]);
 	draw_enemy(&enemy, modelLocation, colorLocation, sphere_num_Triangle);
@@ -454,7 +454,7 @@ void Mouse(int button, int state, int x, int y)
 		if (player->gun.Shot()) {
 			float x, y, z;
 			player->GetPos(&x, &y, &z);
-			bullet.push_back(Bullet(x, y, z, player->GetXangle(), player->GetYangle()));
+			player_bullet.push_back(Bullet(x, y, z, player->GetXangle(), player->GetYangle(), true));
 		}
 		// std::cout << "bullet" << bullet.size() << std::endl;
 		// 주인공 총 발사

@@ -24,7 +24,7 @@ public:
 	void GetPos(float* input_x, float* input_y, float* input_z);
 	float GetXangle();
 	float GetYangle();
-	void collide_bullet(std::vector<Bullet>* v);	// 面倒 贸府
+	bool collide_bullet(std::vector<Bullet>* v);	// 面倒 贸府
 };
 
 #endif

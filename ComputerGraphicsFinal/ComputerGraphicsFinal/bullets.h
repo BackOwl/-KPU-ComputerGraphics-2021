@@ -8,7 +8,7 @@ void update_bullet(std::vector<Bullet>* v, float time) {
 
 	}
 
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	int i = 0;
 	for (std::vector<Bullet>::iterator it = v->begin(); it != v->end(); it++)
 	{

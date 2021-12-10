@@ -25,6 +25,7 @@
     <ClInclude Include="gun.h" />
     <ClInclude Include="obj.h" />
     <ClInclude Include="character.h" />
+    <ClInclude Include="particle.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="timer_.h" />
     <ClInclude Include="bullets.h" />

@@ -1,5 +1,6 @@
 #pragma once
 #include "gun.h"
+#include "bullet.h"
 #ifndef character_
 #define character_
 
@@ -23,6 +24,7 @@ public:
 	void GetPos(float* input_x, float* input_y, float* input_z);
 	float GetXangle();
 	float GetYangle();
+	void collide_bullet(std::vector<Bullet>* v);	// 충돌 처리
 };
 
 #endif

@@ -21,7 +21,7 @@ public:
 		gun = Gun(x, y, z, x_angle, y_angle);
 	};
 	~Player() = default;
-	void Update(int window_x, int window_y, int width, int height, float slow_time);
+	void Update(std::vector<Bullet>* v, int window_x, int window_y, int width, int height, float slow_time);
 
 	void Rotate(int x, int y, int width, int height);	// 마우스 좌표에 따라 회전.  현재 마우스 좌표 - 이전 마우스 좌표의 값을 받아온다 
 };

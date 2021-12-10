@@ -30,13 +30,16 @@
 #include "enemy.h"
 #include "timer_.h"
 #include "bullet.h"
+#include "bullets.h"
+#include "enemies.h"
 
 #define width 600
 #define height 600
 #pragma warning(disable:4996)
 
-int num_Triangle;
-GLuint vao[2], vbo[4];
+int gun_num_Triangle;
+int sphere_num_Triangle;
+GLuint vao[3], vbo[6];
 
 bool make_vertexShader();
 bool make_fragmentShaders();
@@ -67,33 +70,10 @@ Timer_* timer;
 
 POINT prev_mouse;	// 마우스 이전 좌표 저장
 
-std::vector<Bullet> bullet;	// 모든 총알 여기서 관리
+std::vector<Bullet> enemy_bullet;	// 적들 총알 여기서 관리
+std::vector<Bullet> player_bullet;	// player 총알 여기서 관리
+std::vector<Enemy> enemy;	// 모든 적 여기서 관리
 
-
-void update_bullet(std::vector<Bullet>* v, float time) {
-	for (int i = 0; i < v->size(); ++i) {
-		(*v)[i].Update(time);
-		
-	}
-
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	int i = 0;
-	for (std::vector<Bullet>::iterator it = v->begin(); it!= v->end(); it++)
-	{
-		if ((*v)[i].len_check()) {	
-			it = v->erase(it);
-			break;
-		}
-		++i;
-	}
-
-}
-
-void draw_bullet(std::vector<Bullet>* v, unsigned int modelLocation, unsigned int colorLocation, int numTriangle) {
-	for (int i = 0; i < v->size(); ++i) {
-		(*v)[i].Draw(modelLocation, colorLocation, numTriangle);
-	}
-}
 
 GLfloat cube[36][3] = { //--- 버텍스 속성: 좌표값(FragPos), 노말값 (Normal)
 	{-0.5f, -0.5f, -0.5f}, {0.5f, -0.5f, -0.5f}, {0.5f, 0.5f, -0.5f},
@@ -131,6 +111,9 @@ GLfloat cube_normal[36][3] = { //--- 버텍스 속성: 좌표값(FragPos), 노말값 (Norma
 void Init() {
 	player = new Player();
 	timer = new Timer_();
+	enemy.push_back(Enemy(10.0, 0.0, 5.0));
+	enemy.push_back(Enemy(-10.0, 0.0, 10.0));
+	enemy.push_back(Enemy(10.0, 0.0, -10.0));
 }
 
 void Delete() {
@@ -144,10 +127,15 @@ void Update() {
 	int y = glutGet(GLUT_WINDOW_Y);
 	int window_width = glutGet(GLUT_WINDOW_WIDTH);
 	int window_height = glutGet(GLUT_WINDOW_HEIGHT);
+	float pl_x, pl_y, pl_z;
+	player->GetPos(&pl_x, &pl_y, &pl_z);
+	update_enemy(&enemy, &enemy_bullet, &player_bullet, pl_x, pl_z, timer->SlowDeltaTime());
 	Key_Update();
 	timer->Update();
-	player->Update(x, y, window_width, window_height, timer->SlowDeltaTime());
-	update_bullet(&bullet, timer->SlowDeltaTime());
+	
+	player->Update(&enemy_bullet, x, y, window_width, window_height, timer->SlowDeltaTime());
+	update_bullet(&player_bullet, timer->SlowDeltaTime());
+	update_bullet(&enemy_bullet, timer->SlowDeltaTime());
 }
 
 bool make_fragmentShaders()
@@ -212,20 +200,22 @@ void InitShader()
 }
 void InitBuffer()
 {
-	Obj obj = loadObj("Resource\\gun.obj");
+	Obj gun_obj = loadObj("Resource\\gun.obj");
+	Obj sphere_obj = loadObj("Resource\\sphere.obj");
 
-	num_Triangle = obj.num;
+	gun_num_Triangle = gun_obj.num;
+	sphere_num_Triangle = sphere_obj.num;
 
-	glGenVertexArrays(2, vao); //--- VAO 를 지정하고 할당하기
-	glGenBuffers(4, vbo); //--- 2개의 VBO를 지정하고 할당하기
+	glGenVertexArrays(3, vao); //--- VAO 를 지정하고 할당하기
+	glGenBuffers(6, vbo); //--- 2개의 VBO를 지정하고 할당하기
 
 	glBindVertexArray(vao[0]);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-	glBufferData(GL_ARRAY_BUFFER, obj.outvertex.size() * sizeof(glm::vec3), &obj.outvertex[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, gun_obj.outvertex.size() * sizeof(glm::vec3), &gun_obj.outvertex[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-	glBufferData(GL_ARRAY_BUFFER, obj.outnormal.size() * sizeof(glm::vec3), &obj.outnormal[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, gun_obj.outnormal.size() * sizeof(glm::vec3), &gun_obj.outnormal[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 	glEnableVertexAttribArray(1);
 
@@ -238,6 +228,17 @@ void InitBuffer()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(cube_normal), cube_normal, GL_STATIC_DRAW);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 	glEnableVertexAttribArray(1);
+
+	glBindVertexArray(vao[2]);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo[4]);
+	glBufferData(GL_ARRAY_BUFFER, sphere_obj.outvertex.size() * sizeof(glm::vec3), &sphere_obj.outvertex[0], GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo[5]);
+	glBufferData(GL_ARRAY_BUFFER, sphere_obj.outnormal.size() * sizeof(glm::vec3), &sphere_obj.outnormal[0], GL_STATIC_DRAW);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+	glEnableVertexAttribArray(1);
+
 	//glBindVertexArray(VAO[]);
 	////--- 위치 속성
 	//glBindBuffer(GL_ARRAY_BUFFER, VBO[32]);
@@ -391,11 +392,15 @@ GLvoid drawScene() {
 	glUniform3f(colorLocation, 0.0, 0.0, 0.0);
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(Si));
 
-	glDrawArrays(GL_TRIANGLES, 0, num_Triangle);
+	glDrawArrays(GL_TRIANGLES, 0, gun_num_Triangle);
 	
-	player->gun.Draw(modelLocation, colorLocation, num_Triangle);
+	player->gun.Draw(modelLocation, colorLocation, gun_num_Triangle);
 	glBindVertexArray(vao[1]);
-	draw_bullet(&bullet, modelLocation, colorLocation, 36);
+	draw_bullet(&player_bullet, modelLocation, colorLocation, 36);
+	draw_bullet(&enemy_bullet, modelLocation, colorLocation, 36);
+
+	glBindVertexArray(vao[2]);
+	draw_enemy(&enemy, modelLocation, colorLocation, sphere_num_Triangle);
 	glutSwapBuffers();
 }
 
@@ -449,7 +454,7 @@ void Mouse(int button, int state, int x, int y)
 		if (player->gun.Shot()) {
 			float x, y, z;
 			player->GetPos(&x, &y, &z);
-			bullet.push_back(Bullet(x, y, z, player->GetXangle(), player->GetYangle()));
+			player_bullet.push_back(Bullet(x, y, z, player->GetXangle(), player->GetYangle(), true));
 		}
 		// std::cout << "bullet" << bullet.size() << std::endl;
 		// 주인공 총 발사

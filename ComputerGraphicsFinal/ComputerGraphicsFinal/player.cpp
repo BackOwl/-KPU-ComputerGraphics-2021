@@ -1,11 +1,12 @@
 #include "player.h"
 #include <iostream>
 
-void Player::Update(int window_x, int window_y, int width, int height, float slow_time)
+void Player::Update(std::vector<Bullet>* v, int window_x, int window_y, int width, int height, float slow_time)
 {
 	Rotate(window_x, window_y, width, height);
 	gun.Set(x, y, z, x_angle, y_angle);
 	gun.Update(slow_time);
+	collide_bullet(v);
 }
 
 void Player::Rotate(int x, int y, int width, int height)	// 마우스 좌표에 따라 회전

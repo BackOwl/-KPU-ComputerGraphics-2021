@@ -27,4 +27,5 @@ public:
 	bool collide_bullet(std::vector<Bullet>* v);	// 충돌 처리
 };
 
+
 #endif

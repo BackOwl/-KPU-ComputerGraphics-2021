@@ -3,6 +3,26 @@
 
 void Player::Update(std::vector<Bullet>* v, int window_x, int window_y, int width, int height, float slow_time)
 {
+	float result = 0.0;
+	if (x <= 50.0) {
+		result = x;
+	}
+	else {
+		result = -50.0;
+	}
+	if (result < -50.0) result = -50.0;
+
+	x = result;
+	result = 0.0;
+	if (z <= 50.0) {
+		result = z;
+	}
+	else {
+		result = 50.0;
+	}
+	if (result < -50.0) result = -50.0;
+	
+	z = result;
 	Rotate(window_x, window_y, width, height);
 	gun.Set(x, y, z, x_angle, y_angle);
 	gun.Update(slow_time);

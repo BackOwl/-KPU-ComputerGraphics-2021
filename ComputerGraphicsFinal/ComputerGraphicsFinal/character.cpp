@@ -50,3 +50,4 @@ bool Character::collide_bullet(std::vector<Bullet>* v)
 	}
 	return false;
 }
+

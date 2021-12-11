@@ -26,4 +26,19 @@ public:
 	void Rotate(int x, int y, int width, int height);	// 마우스 좌표에 따라 회전.  현재 마우스 좌표 - 이전 마우스 좌표의 값을 받아온다 
 };
 
+//float clamp1(float maximum, float character, float minimum) {
+//	float result = 0.0;
+//
+//	if (character <= maximum) {
+//		result = character;
+//	}
+//	else {
+//		result = maximum;
+//	}
+//	if (result >= minimum) return result;
+//	else return minimum;
+//	//return std::max(minimum, std::min(character, maximum));
+//}
+
+
 #endif

@@ -48,7 +48,7 @@ DWORD dwVolume = 100;
 
 int gun_num_Triangle;
 int sphere_num_Triangle;
-GLuint vao[4], vbo[8];
+GLuint vao[4], vbo[8],background_vao[6], background_vbo[12];
 
 bool make_vertexShader();
 bool make_fragmentShaders();
@@ -87,14 +87,19 @@ std::vector<ParticleSystem> particle;
 GLfloat cube[36][3] = { //--- 버텍스 속성: 좌표값(FragPos), 노말값 (Normal)
 	{-0.5f, -0.5f, -0.5f}, {0.5f, -0.5f, -0.5f}, {0.5f, 0.5f, -0.5f},
 	{0.5f, 0.5f, -0.5f}, {-0.5f, 0.5f, -0.5f}, {-0.5f, -0.5f, -0.5f },
+
 	-0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
 	0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, -0.5f, 0.5f,
+
 	-0.5f, 0.5f, 0.5f, -0.5f, 0.5f, -0.5f, -0.5f, -0.5f, -0.5f,
 	-0.5f, -0.5f, -0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f,
+
 	0.5f, 0.5f, 0.5f, 0.5f, 0.5f, -0.5f, 0.5f, -0.5f, -0.5f,
 	0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f, 0.5f,
+
 	-0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, -0.5f, 0.5f,
 	0.5f, -0.5f, 0.5f, -0.5f, -0.5f, 0.5f, -0.5f, -0.5f, -0.5f,
+
 	-0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, 0.5f,
 	0.5f, 0.5f, 0.5f, -0.5f, 0.5f, 0.5f, -0.5f, 0.5f, -0.5f
 };
@@ -102,14 +107,19 @@ GLfloat cube[36][3] = { //--- 버텍스 속성: 좌표값(FragPos), 노말값 (Normal)
 GLfloat cube_normal[36][3] = { //--- 버텍스 속성: 좌표값(FragPos), 노말값 (Normal)
 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f,
 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f,
+
 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+
 -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
 -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
+
 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+
 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f,
 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, -1.0f, 0.0f,
+
 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f
 };
@@ -319,6 +329,23 @@ void InitBuffer()
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 	glEnableVertexAttribArray(1);
 
+	//---------------배경 구성원-------------------------
+	glGenVertexArrays(6, background_vao); //--- VAO 를 지정하고 할당하기
+	glGenBuffers(12, background_vbo); //--- 2개의 VBO를 지정하고 할당하기
+	for (int i = 0; i < 6; i ++) {
+
+		glBindVertexArray(background_vao[i]);	// 정육면체
+		glBindBuffer(GL_ARRAY_BUFFER, background_vbo[2*i+0]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(cube), cube, GL_STATIC_DRAW);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+		glEnableVertexAttribArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, background_vbo[2*i+1]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(cube_normal), cube_normal, GL_STATIC_DRAW);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+		glEnableVertexAttribArray(1);
+	}
+
+
 	//glBindVertexArray(VAO[]);
 	////--- 위치 속성
 	//glBindBuffer(GL_ARRAY_BUFFER, VBO[32]);
@@ -459,7 +486,7 @@ GLvoid drawScene() {
 
 	glm::mat4 projection = glm::mat4(1.0f);
 
-	projection = glm::perspective(glm::radians(45.0f), (float)width / (float)height, 0.1f, 50.0f);
+	projection = glm::perspective(glm::radians(45.0f), (float)width / (float)height, 0.1f, 110.0f);
 	projection = glm::rotate(projection, (GLfloat)glm::radians(player->GetYangle()), glm::vec3(1.0f, 0.0f, 0.0f));
 	projection = glm::rotate(projection, (GLfloat)glm::radians(player->GetXangle()), glm::vec3(0.0f, 1.0f, 0.0f));
 
@@ -476,7 +503,7 @@ GLvoid drawScene() {
 	int viewPos = glGetUniformLocation(shaderID, "viewPo");
 
 	glUniform1f(shine, 128.0);
-	glUniform1f(ambient, 1.0);
+	glUniform1f(ambient, 0.2);
 
 	glUniform3f(lightColorLocation, 1.0, 1.0, 1.0);
 
@@ -507,6 +534,58 @@ GLvoid drawScene() {
 
 	glBindVertexArray(vao[3]);
 	draw_particle(&particle, player->GetXangle(), modelLocation, colorLocation, 10);
+
+	//----------맵 기본 6 //////
+	glm::mat4 right =glm::translate(glm::mat4(1.0f), glm::vec3(-50.0, 7.0,0.0));
+	glm::mat4 left  = glm::translate(glm::mat4(1.0f), glm::vec3(50.0, 7.0, 0.0));
+	glm::mat4 up    = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 10.0, 0.0));
+	glm::mat4 front = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 7.0, 50.0));
+	glm::mat4 back  = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 7.0, -50.0));
+	glm::mat4 down = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, -3.0, -0.0));
+
+	glm::mat4 RLscale = glm::scale(glm::mat4(1.0f), glm::vec3(1.0, 100.0, 100.0));
+	glm::mat4 UDscale = glm::scale(glm::mat4(1.0f), glm::vec3(100.0, 1.0, 100.0));
+	glm::mat4 FBscale = glm::scale(glm::mat4(1.0f), glm::vec3(100.0, 100.0, 1.0));
+
+	glm::mat4 END= right * RLscale;
+	glUniform3f(colorLocation, 0.0, 1.0, 0.0);
+	glBindVertexArray(background_vao[0]);
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(END));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+
+	END = left * RLscale ;
+	glUniform3f(colorLocation, 1.0, 0.0, 0.0);
+	glBindVertexArray(background_vao[1]);
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(END));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+
+	END = up * UDscale;
+	glUniform3f(colorLocation, 1.0, 0.0, 1.0);
+	glBindVertexArray(background_vao[2]);
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(END));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+
+	END = down* UDscale;
+	glUniform3f(colorLocation, 1.0, 1.0, 0.0);
+	glBindVertexArray(background_vao[3]);
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(END));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+	END = front * FBscale ;
+	glUniform3f(colorLocation, 0.0, 1.0, 1.0);
+	glBindVertexArray(background_vao[4]);
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(END));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+
+	END = back * FBscale ;
+	glUniform3f(colorLocation, 0.0, 0.8, 0.8);
+	glBindVertexArray(background_vao[5]);
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(END));
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+
 
 	glutSwapBuffers();
 }

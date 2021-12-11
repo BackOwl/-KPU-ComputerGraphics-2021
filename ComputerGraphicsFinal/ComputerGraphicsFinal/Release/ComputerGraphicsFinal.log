@@ -17,17 +17,15 @@ C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphics
 C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(82,20): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(82,17): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
 C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(82,14): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(137,1): warning C4305: '초기화 중': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(184,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(408,1): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
-C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(506,26): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(582,42): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
-  player.cpp
-C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\bullet.h(29,1): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\player.h(18,1): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(51,23): warning C4305: '초기화 중': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(138,1): warning C4305: '초기화 중': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(185,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(409,1): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(511,26): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(587,42): warning C4305: '인수': 'double'에서 'GLfloat'(으)로 잘립니다.
   코드를 생성하고 있습니다.
-  3 of 593 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+  0 of 593 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   코드를 생성했습니다.
   ComputerGraphicsFinal.vcxproj -> C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\Release\ComputerGraphicsFinal.exe

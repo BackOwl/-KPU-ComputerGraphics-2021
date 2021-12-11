@@ -24,7 +24,7 @@ DWORD m_dwDeviceID;
 MCI_OPEN_PARMS mciOpen;
 MCI_PLAY_PARMS mciPlay;
 MCI_DGV_SETAUDIO_PARMS SetAudio;
-int dwID, gunID;
+int dwID, gunID, walkID;
 //볼륨설정 
 DWORD dwVolume = 100;
 
@@ -48,6 +48,7 @@ DWORD dwVolume = 100;
 
 int gun_num_Triangle;
 int sphere_num_Triangle;
+float walk_time = 0.45;
 GLuint vao[4], vbo[8],background_vao[6], background_vbo[12];
 
 bool make_vertexShader();
@@ -445,6 +446,10 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	mciOpen.lpstrElementName = L"Resource/Sound/gun_1.wav"; // 파일 경로 입력
 	mciSendCommand(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&mciOpen);
 	gunID = mciOpen.wDeviceID;
+
+	mciOpen.lpstrElementName = L"Resource/Sound/walk_3.wav"; // 파일 경로 입력
+	mciSendCommand(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&mciOpen);
+	walkID = mciOpen.wDeviceID;
 	/////////
 
 	InitShader();
@@ -617,21 +622,38 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
 }
 
 void Key_Update() {	
+	bool walk = false;
 	if (GetAsyncKeyState('W')) {
 		player->Move_Front(timer->DeltaTime());
 		timer->SetTimerFast();
+		walk = true;
 	}
 	if (GetAsyncKeyState('A')) {
 		player->Move_Left(timer->DeltaTime());
 		timer->SetTimerFast();
+		walk = true;
 	}
 	if (GetAsyncKeyState('S')) {
 		player->Move_Back(timer->DeltaTime());
 		timer->SetTimerFast();
+		walk = true;
 	}
 	if (GetAsyncKeyState('D')  ) {
 		player->Move_Right(timer->DeltaTime());
 		timer->SetTimerFast();
+		walk = true;
+	}
+	if (walk == true){
+		walk_time += timer->DeltaTime();
+		if (walk_time > 0.5) {
+			walk_time = 0.45;
+			walk = false;
+
+			mciSendCommand(walkID, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)&m_mciPlayParms);
+			mciSendCommand(walkID, MCI_PLAY, 0, (DWORD)(LPVOID)&m_mciPlayParms);
+
+		}
+		
 	}
 }
 

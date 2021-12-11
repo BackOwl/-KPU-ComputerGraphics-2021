@@ -143,12 +143,22 @@ void Init() {
 void Delete() {
 	delete player;
 	delete timer;
+	enemy_bullet.clear();	// 적들 총알 여기서 관리
+	player_bullet.clear();	// player 총알 여기서 관리
+	enemy.clear();	// 모든 적 여기서 관리
+	particle.clear();
 }
 
 
 void update_particle(std::vector<ParticleSystem>* v, float time) {
-	for (int i = 0; i < v->size(); ++i) {
-		(*v)[i].Update(time);
+	int i = 0;
+	for (std::vector<ParticleSystem>::iterator it = v->begin(); it != v->end(); it++)
+	{
+		if ((*v)[i].Update(time)) {
+			it = v->erase(it);
+			break;
+		}
+		++i;
 	}
 }
 
@@ -487,6 +497,7 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
 	switch (key) {		
 	case 'q':
 	case 'Q':
+		Delete();
 		glutLeaveMainLoop();
 	}
 	glutPostRedisplay();

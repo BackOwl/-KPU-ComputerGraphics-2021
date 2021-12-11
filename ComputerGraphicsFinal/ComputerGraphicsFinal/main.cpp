@@ -13,16 +13,24 @@
 #include <vector>
 #include <crtdbg.h>
 //#include <stdio.h>
-/////
+
+//////노래함수 //////
 #pragma comment(lib,"winmm")
-#include < mmsystem.h> 
-// SND_ASUNC = 재생중에도 프로그램이 계속 돌아감	
-// SND_SYNC = 재생이 끝나야 프로그램이 돌아감
-// SND_FILENAME  = 매개 변수가 파일이름일떄 
-// SND_LOOP  = 반복재생
-// SND_PURGE = 재생중지 
-// PlaySound(TEXT(SOUND_FILE_NAME), NULL,SND_ASYNC|SND_ALIAS);
-/////
+#include <mmsystem.h> 
+#include "Digitalv.h"
+MCI_OPEN_PARMS m_mciOpenParms;
+MCI_PLAY_PARMS m_mciPlayParms;
+DWORD m_dwDeviceID;
+MCI_OPEN_PARMS mciOpen;
+MCI_PLAY_PARMS mciPlay;
+MCI_DGV_SETAUDIO_PARMS SetAudio;
+int dwID, gunID;
+//볼륨설정 
+DWORD dwVolume = 100;
+
+
+
+///////////////////명령어 확인 <https://sysys.tistory.com/30>,playsound 명령어 <https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=enter_maintanance&logNo=220950709844>
 
 #include "filetobuf.h"
 #include "obj.h"
@@ -389,6 +397,29 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	else
 		std::cout << "GLEW Initialized\n";
 
+	///////배경음악 재생 
+	mciOpen.lpstrElementName = L"Resource/Sound/thema_1.mp3"; // 파일 경로 입력
+	mciOpen.lpstrDeviceType = L"mpegvideo";
+
+	mciSendCommand(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE,(DWORD)(LPVOID)&mciOpen);
+	dwID = mciOpen.wDeviceID;
+
+	SetAudio.dwCallback = SetAudio.dwOver = 0;
+	SetAudio.dwItem = MCI_DGV_SETAUDIO_VOLUME;
+	SetAudio.dwValue = dwVolume; //소리크기 조절
+	SetAudio.lpstrAlgorithm = SetAudio.lpstrQuality = NULL;
+	mciSendCommandW(dwID, MCI_SETAUDIO, MCI_DGV_SETAUDIO_VALUE| MCI_DGV_SETAUDIO_ITEM, (DWORD)(LPVOID)&SetAudio);
+
+	mciSendCommand(dwID, MCI_PLAY, MCI_DGV_PLAY_REPEAT,(DWORD)(LPVOID)&m_mciPlayParms);
+	///////배경음악 재생 끝
+
+	//실험공간
+
+	mciOpen.lpstrElementName = L"Resource/Sound/gun_1.wav"; // 파일 경로 입력
+	mciSendCommand(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&mciOpen);
+	gunID = mciOpen.wDeviceID;
+	/////////
+
 	InitShader();
 	InitBuffer();
 	shaderID = make_shaderProgram(); //--- 세이더 프로그램 만들기
@@ -495,6 +526,9 @@ GLvoid Reshape(int w, int h) //--- 콜백 함수: 다시 그리기 콜백 함수
 GLvoid Keyboard(unsigned char key, int x, int y) {
 
 	switch (key) {		
+	case'T':
+	case't': // 명령어 실행여부 테스트용 키보드
+		break;
 	case 'q':
 	case 'Q':
 		Delete();
@@ -528,10 +562,14 @@ void Mouse(int button, int state, int x, int y)
 
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN)
 	{
+
 		if (player->gun.Shot()) {
 			float x, y, z;
 			player->GetPos(&x, &y, &z);
 			player_bullet.push_back(Bullet(x, y, z, player->GetXangle(), player->GetYangle(), true));
+
+			mciSendCommand(gunID, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)&m_mciPlayParms);
+			mciSendCommand(gunID, MCI_PLAY, 0, (DWORD)(LPVOID)&m_mciPlayParms);
 			//particle.push_back(ParticleSystem(0, 0, 0));
 		}
 		// std::cout << "bullet" << bullet.size() << std::endl;

@@ -45,7 +45,6 @@
     <ClCompile Include="enemy.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="Resource\Sound\test1.wav" />
     <Media Include="Resource\Sound\thema_1.mp3" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

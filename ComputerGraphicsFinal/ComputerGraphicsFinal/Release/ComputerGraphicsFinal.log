@@ -1,28 +1,28 @@
 ﻿  main.cpp
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\obj.h(106,29): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\obj.h(107,29): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\obj.h(108,29): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\bullet.h(29,1): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\player.h(18,1): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\enemy.h(13,1): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\bullets.h(6,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\bullets.h(25,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\enemies.h(6,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\enemies.h(12,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(20,59): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(21,52): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(25,1): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(73,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(81,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(82,20): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(82,17): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(82,14): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(119,1): warning C4305: '초기화 중': 'double'에서 'GLfloat'(으)로 잘립니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(166,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(373,1): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\obj.h(106,29): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\obj.h(107,29): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\obj.h(108,29): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\bullet.h(29,1): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\player.h(18,1): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\enemy.h(13,1): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\bullets.h(6,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\bullets.h(25,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\enemies.h(6,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\enemies.h(12,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(20,59): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(21,52): warning C4244: '=': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(25,1): warning C4305: '=': 'double'에서 'float'(으)로 잘립니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(73,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(81,21): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(82,20): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(82,17): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\particle.h(82,14): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(127,1): warning C4305: '초기화 중': 'double'에서 'GLfloat'(으)로 잘립니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(174,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\ComputerGraphicsFinal\main.cpp(381,1): warning C4326: 'main'의 반환 형식이 'int'이어야 하는데 'void'입니다.
   코드를 생성하고 있습니다.
-  97 of 595 functions (16.3%) were compiled, the rest were copied from previous compilation.
-    29 functions were new in current compilation
-    51 functions had inline decision re-evaluated but remain unchanged
+  1 of 593 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
   코드를 생성했습니다.
-  ComputerGraphicsFinal.vcxproj -> C:\2DGP\-KPU-ComputerGraphics-2021\ComputerGraphicsFinal\Release\ComputerGraphicsFinal.exe
+  ComputerGraphicsFinal.vcxproj -> C:\Users\백 아울\ComputerGraphicsFinal\ComputerGraphicsFinal\Release\ComputerGraphicsFinal.exe

@@ -4,23 +4,23 @@
 void Player::Update(std::vector<Bullet>* v, int window_x, int window_y, int width, int height, float slow_time)
 {
 	float result = 0.0;
-	if (x <= 50.0) {
+	if (x <= 49.5) {
 		result = x;
 	}
 	else {
-		result = -50.0;
+		result = -49.5;
 	}
-	if (result < -50.0) result = -50.0;
+	if (result < -49.5) result = -49.5;
 
 	x = result;
 	result = 0.0;
-	if (z <= 50.0) {
+	if (z <= 49.5) {
 		result = z;
 	}
 	else {
-		result = 50.0;
+		result = 49.5;
 	}
-	if (result < -50.0) result = -50.0;
+	if (result < -49.5) result = -49.5;
 	
 	z = result;
 	Rotate(window_x, window_y, width, height);

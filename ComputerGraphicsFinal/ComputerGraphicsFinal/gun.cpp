@@ -1,5 +1,5 @@
 #include "gun.h"
-#include <iostream>
+//#include <iostream>
 
 void Gun::Draw(unsigned int modelLocation, unsigned int colorLocation, int numTriangle) {
 

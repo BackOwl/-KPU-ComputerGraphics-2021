@@ -24,7 +24,7 @@ DWORD m_dwDeviceID;
 MCI_OPEN_PARMS mciOpen;
 MCI_PLAY_PARMS mciPlay;
 MCI_DGV_SETAUDIO_PARMS SetAudio;
-int dwID, gunID, walkID;
+int dwID, gunID, walkID,dieID;
 //볼륨설정 
 DWORD dwVolume = 100;
 
@@ -212,6 +212,10 @@ void Update() {
 			printf("particle");
 			particle.push_back(ParticleSystem(x, y, z));
 			it = enemy.erase(it);
+			mciSendCommandW(dieID, MCI_SETAUDIO, MCI_DGV_SETAUDIO_VALUE | MCI_DGV_SETAUDIO_ITEM, (DWORD)(LPVOID)&SetAudio);
+			mciSendCommand(dieID, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)&m_mciPlayParms);
+			mciSendCommand(dieID, MCI_PLAY, 0, (DWORD)(LPVOID)&m_mciPlayParms);
+
 			break;
 		}
 		++i;
@@ -450,6 +454,10 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	mciOpen.lpstrElementName = L"Resource/Sound/walk_3.wav"; // 파일 경로 입력
 	mciSendCommand(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&mciOpen);
 	walkID = mciOpen.wDeviceID;
+
+	mciOpen.lpstrElementName = L"Resource/Sound/die_2.wav"; // 파일 경로 입력
+	mciSendCommand(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&mciOpen);
+	dieID = mciOpen.wDeviceID;
 	/////////
 
 	InitShader();
@@ -491,7 +499,7 @@ GLvoid drawScene() {
 
 	glm::mat4 projection = glm::mat4(1.0f);
 
-	projection = glm::perspective(glm::radians(45.0f), (float)width / (float)height, 0.1f, 110.0f);
+	projection = glm::perspective(glm::radians(45.0f), (float)width / (float)height, 0.1f, 150.0f);
 	projection = glm::rotate(projection, (GLfloat)glm::radians(player->GetYangle()), glm::vec3(1.0f, 0.0f, 0.0f));
 	projection = glm::rotate(projection, (GLfloat)glm::radians(player->GetXangle()), glm::vec3(0.0f, 1.0f, 0.0f));
 
@@ -623,6 +631,7 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
 
 void Key_Update() {	
 	bool walk = false;
+	//walk_time = 0.45;
 	if (GetAsyncKeyState('W')) {
 		player->Move_Front(timer->DeltaTime());
 		timer->SetTimerFast();
@@ -646,7 +655,7 @@ void Key_Update() {
 	if (walk == true){
 		walk_time += timer->DeltaTime();
 		if (walk_time > 0.5) {
-			walk_time = 0.45;
+			walk_time = 0.0;
 			walk = false;
 
 			mciSendCommand(walkID, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)&m_mciPlayParms);

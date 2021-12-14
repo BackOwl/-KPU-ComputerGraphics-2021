@@ -24,7 +24,7 @@ DWORD m_dwDeviceID;
 MCI_OPEN_PARMS mciOpen;
 MCI_PLAY_PARMS mciPlay;
 MCI_DGV_SETAUDIO_PARMS SetAudio;
-int dwID, gunID, walkID,dieID;
+int dwID, gunID, walkID, dieID;
 //볼륨설정 
 DWORD dwVolume = 100;
 
@@ -49,7 +49,7 @@ DWORD dwVolume = 100;
 int gun_num_Triangle;
 int sphere_num_Triangle;
 float walk_time = 0.45;
-GLuint vao[4], vbo[8],background_vao[6], background_vbo[12];
+GLuint vao[4], vbo[8], background_vao[6], background_vbo[12];
 
 bool make_vertexShader();
 bool make_fragmentShaders();
@@ -243,7 +243,7 @@ bool make_fragmentShaders()
 	}
 	return true;
 
-	
+
 }
 bool make_vertexShader()
 {
@@ -337,14 +337,14 @@ void InitBuffer()
 	//---------------배경 구성원-------------------------
 	glGenVertexArrays(6, background_vao); //--- VAO 를 지정하고 할당하기
 	glGenBuffers(12, background_vbo); //--- 2개의 VBO를 지정하고 할당하기
-	for (int i = 0; i < 6; i ++) {
+	for (int i = 0; i < 6; i++) {
 
 		glBindVertexArray(background_vao[i]);	// 정육면체
-		glBindBuffer(GL_ARRAY_BUFFER, background_vbo[2*i+0]);
+		glBindBuffer(GL_ARRAY_BUFFER, background_vbo[2 * i + 0]);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(cube), cube, GL_STATIC_DRAW);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, background_vbo[2*i+1]);
+		glBindBuffer(GL_ARRAY_BUFFER, background_vbo[2 * i + 1]);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(cube_normal), cube_normal, GL_STATIC_DRAW);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
 		glEnableVertexAttribArray(1);
@@ -433,16 +433,16 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	mciOpen.lpstrElementName = L"Resource/Sound/thema_1.mp3"; // 파일 경로 입력
 	mciOpen.lpstrDeviceType = L"mpegvideo";
 
-	mciSendCommand(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE,(DWORD)(LPVOID)&mciOpen);
+	mciSendCommand(NULL, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&mciOpen);
 	dwID = mciOpen.wDeviceID;
 
 	SetAudio.dwCallback = SetAudio.dwOver = 0;
 	SetAudio.dwItem = MCI_DGV_SETAUDIO_VOLUME;
 	SetAudio.dwValue = dwVolume; //소리크기 조절
 	SetAudio.lpstrAlgorithm = SetAudio.lpstrQuality = NULL;
-	mciSendCommandW(dwID, MCI_SETAUDIO, MCI_DGV_SETAUDIO_VALUE| MCI_DGV_SETAUDIO_ITEM, (DWORD)(LPVOID)&SetAudio);
+	mciSendCommandW(dwID, MCI_SETAUDIO, MCI_DGV_SETAUDIO_VALUE | MCI_DGV_SETAUDIO_ITEM, (DWORD)(LPVOID)&SetAudio);
 
-	mciSendCommand(dwID, MCI_PLAY, MCI_DGV_PLAY_REPEAT,(DWORD)(LPVOID)&m_mciPlayParms);
+	mciSendCommand(dwID, MCI_PLAY, MCI_DGV_PLAY_REPEAT, (DWORD)(LPVOID)&m_mciPlayParms);
 	///////배경음악 재생 끝
 
 	//실험공간
@@ -475,12 +475,12 @@ void main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 }
 
 GLvoid drawScene() {
-	
+
 
 	GLfloat rColor, gColor, bColor;
 	rColor = gColor = bColor = 1.0;
 
-	PlaySound(TEXT("test1.wav"), NULL, SND_ASYNC | SND_ALIAS|SND_LOOP);
+	PlaySound(TEXT("test1.wav"), NULL, SND_ASYNC | SND_ALIAS | SND_LOOP);
 
 	glClearColor(rColor, gColor, bColor, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -529,14 +529,14 @@ GLvoid drawScene() {
 	glUniform3f(viewPos, Viewl.x, Viewl.y, Viewl.z);
 
 	glBindVertexArray(vao[0]);
-	
+
 	glm::mat4 Si = glm::scale(glm::mat4(1.0f), glm::vec3(0.2, 0.2, 0.2));
 	//glm::mat4 Light = Tr * Si;
 	glUniform3f(colorLocation, 0.0, 0.0, 0.0);
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(Si));
 
-	glDrawArrays(GL_TRIANGLES, 0, gun_num_Triangle);
-	
+	//glDrawArrays(GL_TRIANGLES, 0, gun_num_Triangle);
+
 	player->gun.Draw(modelLocation, colorLocation, gun_num_Triangle);
 	glBindVertexArray(vao[1]);
 	draw_bullet(&player_bullet, modelLocation, colorLocation, 36);
@@ -549,24 +549,24 @@ GLvoid drawScene() {
 	draw_particle(&particle, player->GetXangle(), modelLocation, colorLocation, 10);
 
 	//----------맵 기본 6 //////
-	glm::mat4 right =glm::translate(glm::mat4(1.0f), glm::vec3(-50.0, 7.0,0.0));
-	glm::mat4 left  = glm::translate(glm::mat4(1.0f), glm::vec3(50.0, 7.0, 0.0));
-	glm::mat4 up    = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 10.0, 0.0));
+	glm::mat4 right = glm::translate(glm::mat4(1.0f), glm::vec3(-50.0, 7.0, 0.0));
+	glm::mat4 left = glm::translate(glm::mat4(1.0f), glm::vec3(50.0, 7.0, 0.0));
+	glm::mat4 up = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 10.0, 0.0));
 	glm::mat4 front = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 7.0, 50.0));
-	glm::mat4 back  = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 7.0, -50.0));
+	glm::mat4 back = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 7.0, -50.0));
 	glm::mat4 down = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, -3.0, -0.0));
 
 	glm::mat4 RLscale = glm::scale(glm::mat4(1.0f), glm::vec3(1.0, 100.0, 100.0));
 	glm::mat4 UDscale = glm::scale(glm::mat4(1.0f), glm::vec3(100.0, 1.0, 100.0));
 	glm::mat4 FBscale = glm::scale(glm::mat4(1.0f), glm::vec3(100.0, 100.0, 1.0));
 
-	glm::mat4 END= right * RLscale;
+	glm::mat4 END = right * RLscale;
 	glUniform3f(colorLocation, 0.0, 1.0, 0.0);
 	glBindVertexArray(background_vao[0]);
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(END));
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
-	END = left * RLscale ;
+	END = left * RLscale;
 	glUniform3f(colorLocation, 1.0, 0.0, 0.0);
 	glBindVertexArray(background_vao[1]);
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(END));
@@ -578,20 +578,20 @@ GLvoid drawScene() {
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(END));
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
-	END = down* UDscale;
+	END = down * UDscale;
 	glUniform3f(colorLocation, 1.0, 1.0, 0.0);
 	glBindVertexArray(background_vao[3]);
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(END));
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
-	END = front * FBscale ;
+	END = front * FBscale;
 	glUniform3f(colorLocation, 0.0, 1.0, 1.0);
 	glBindVertexArray(background_vao[4]);
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(END));
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 
-	END = back * FBscale ;
+	END = back * FBscale;
 	glUniform3f(colorLocation, 0.0, 0.8, 0.8);
 	glBindVertexArray(background_vao[5]);
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(END));
@@ -617,7 +617,7 @@ GLvoid Reshape(int w, int h) //--- 콜백 함수: 다시 그리기 콜백 함수
 
 GLvoid Keyboard(unsigned char key, int x, int y) {
 
-	switch (key) {		
+	switch (key) {
 	case'T':
 	case't': // 명령어 실행여부 테스트용 키보드
 		break;
@@ -629,7 +629,7 @@ GLvoid Keyboard(unsigned char key, int x, int y) {
 	glutPostRedisplay();
 }
 
-void Key_Update() {	
+void Key_Update() {
 	bool walk = false;
 	//walk_time = 0.45;
 	if (GetAsyncKeyState('W')) {
@@ -647,12 +647,12 @@ void Key_Update() {
 		timer->SetTimerFast();
 		walk = true;
 	}
-	if (GetAsyncKeyState('D')  ) {
+	if (GetAsyncKeyState('D')) {
 		player->Move_Right(timer->DeltaTime());
 		timer->SetTimerFast();
 		walk = true;
 	}
-	if (walk == true){
+	if (walk == true) {
 		walk_time += timer->DeltaTime();
 		if (walk_time > 0.5) {
 			walk_time = 0.0;
@@ -662,7 +662,7 @@ void Key_Update() {
 			mciSendCommand(walkID, MCI_PLAY, 0, (DWORD)(LPVOID)&m_mciPlayParms);
 
 		}
-		
+
 	}
 }
 

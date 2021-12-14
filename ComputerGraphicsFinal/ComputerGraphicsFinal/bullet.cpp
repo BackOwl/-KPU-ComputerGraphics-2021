@@ -28,7 +28,7 @@ void Bullet::Draw(unsigned int modelLocation, unsigned int colorLocation, int nu
 }
 
 bool Bullet::len_check() {
-	if (len > 5.0) {
+	if (len > 10.0) {
 		return true;
 	}
 	return false;

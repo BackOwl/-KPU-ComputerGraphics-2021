@@ -37,4 +37,4 @@ void main()
 	viewPos = viewPo;
 	ambientlight = ambientLigh;
 	Shininess = Shinines;
-} 
+}
